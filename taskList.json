@@ -1,0 +1,16 @@
+{
+    "taskList": [
+        {
+            "description": "Blumen gießen",
+            "done": false
+        },
+        {
+            "description": "Einkaufen",
+            "done": false
+        },
+        {
+            "description": "Projekt vorbereiten",
+            "done": false
+        }
+    ]
+}

@@ -1,0 +1,73 @@
+"use strict";
+
+// Elemente im DOM
+let addButton = document.querySelector("#addInput");
+let inputName = document.querySelector(".listInput");
+let removeButton = document.querySelectorAll (".toArchive");
+let doneButton = document.querySelectorAll (".done");
+let tableBody = document.querySelector("#liste tbody");
+let tbodyArchive = document.querySelector("#tarchive tbody")
+
+let addToList = function() {
+
+    let listTd = document.createElement("td");
+    listTd.textContent = inputName.value;
+
+    let buttonTd = document.createElement("td");
+    /* let button = document.createElement("button");
+    button.textContent = "X";
+    button.className = "toArchive";
+    buttonTd.append (button); */
+    
+    buttonTd.append (createButton("X", "toArchive"), createButton("🗸", "done"));
+
+    let tableRow = document.createElement("tr");
+    tableRow.append(listTd, buttonTd);
+    tableBody.append(tableRow);
+}
+
+// EventListener für addButton
+addButton.addEventListener("click", addToList);
+
+let toArchive = function () {
+        // löschen der Zeile, in der sich der Button befindet
+        this.parentElement.parentElement.remove();
+        tbodyArchive.append(this.parentElement.parentElement); // funktioniert nicht
+}
+
+for (let i = 0; i < removeButton.length; i++) {
+    let buttonElem = removeButton[i];
+    buttonElem.addEventListener ("click", toArchive);
+};
+
+let done = function (){
+    this.classList.toggle ("doneToggle");
+};
+
+for (let k = 0; k < doneButton.length; k++) {
+    let buttonElem = doneButton[k];
+    buttonElem.addEventListener ("click", done);
+};
+
+function createButton(content, klasse) {
+    let button = document.createElement("button");
+    button.textContent = content;
+    button.className = klasse;
+    
+
+    let eventFunction, currentRow;
+    switch (klasse) {
+        case "toArchive": 
+            eventFunction = function() {
+               currentRow = this.parentNode.parentNode;
+               currentRow.remove();
+            };
+            break;
+        case "done":
+            eventFunction = function() {
+                button.classList.toggle("doneToggle");
+            };
+        }
+    button.addEventListener("click", eventFunction);
+    return button;
+}
